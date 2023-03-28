@@ -3,40 +3,24 @@ from duckduckgo_search import ddg
 import logging
 
 class DDGSearch:
-    def __init__(self, keyword='[SEARCH]') -> None:
-        self.keyword = '[SEARCH DDG]'
-        self.searchRegex = r"\[SEARCH DDG\](.*)$"
-        self.noresultResponse = "There are no results for this query. Try a different [SEARCH DDG] query."
-        pass
+    def __init__(self) -> None:
+        self.name = "Current search"
+        self.description = "useful for when you need to answer questions about current events or the current state of the world. The input to this should be a single search term."
+        self.noresultResponse = "There are no results for this query. Try a different query."
 
-    def extractQuery(self, query: str):
-        if self.keyword not in query:
-            return None
-
-        match = re.search(self.searchRegex, query, re.MULTILINE)
-        if match:
-            result = match.group(1).strip()
-            return result
-        else:
-            print("Error matching regex in query\n", query)
-
-        return None
-
-    def constructResponse(self, results, query):
-        prompt = f"[RESULTS] {query}\n"
+    def constructResponse(self, results):
+        prompt = f"TOOL RESULT\n"
         for i, r in enumerate(results):
-            prompt += f"""[RESULT {i+1}]\nTitle: {r['title']}\nBody: {r['body']}\n"""
+            prompt += f"""Title: {r['title']}\nBody: {r['body']}\n"""
         return prompt
 
 
-    def execute(self, query, max_results=3):
-        logging.info(f"Running search query: {query}")
-        input("OK?")
+    def run(self, query, max_results=1):
         searchResults = ddg(query, max_results=max_results)
         if len(searchResults) == 0:
             return self.noresultResponse
 
-        prompt = self.constructResponse(searchResults, query)
+        prompt = self.constructResponse(searchResults)
         #logging.info(f"Performed search and constructed prompt:\n{prompt}")
         return prompt
     
