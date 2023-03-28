@@ -1,11 +1,12 @@
 import re
 from duckduckgo_search import ddg
+import logging
 
 class DDGSearch:
     def __init__(self, keyword='[SEARCH]') -> None:
-        self.keyword = '[SEARCH]'
-        self.searchRegex = r"\[SEARCH\](.*)$"
-        self.noresultResponse = "There are no results for this query. Try a different [SEARCH] query."
+        self.keyword = '[SEARCH DDG]'
+        self.searchRegex = r"^\[SEARCH DDG\](.*)$"
+        self.noresultResponse = "There are no results for this query. Try a different [SEARCH DDG] query."
         pass
 
     def extractQuery(self, query: str):
@@ -21,25 +22,28 @@ class DDGSearch:
 
         return None
 
-    def constructPrompt(self, results):
-        prompt = "[RESULTS]\n"
+    def constructResponse(self, results, query):
+        prompt = f"[RESULTS] {query}\n"
         for i, r in enumerate(results):
-            prompt += f"""Result {i+1}:\nTitle: {r['title']}\nBody: {r['body']}\n"""
+            prompt += f"""[RESULT {i+1}]\nTitle: {r['title']}\nBody: {r['body']}\n"""
         return prompt
 
 
-    def performSearch(self, query, max_results=3):
+    def execute(self, query, max_results=2):
+        logging.info(f"Running search query: {query}")
+        input("OK?")
         searchResults = ddg(query, max_results=max_results)
         if len(searchResults) == 0:
             return self.noresultResponse
 
-        prompt = self.constructPrompt(searchResults)
+        prompt = self.constructResponse(searchResults, query)
+        #logging.info(f"Performed search and constructed prompt:\n{prompt}")
         return prompt
     
 if __name__ == "__main__":
     ddgsearch = DDGSearch()
     query = """Lemme look that shiii up
-    [SEARCH] Kanye West recent news?
+    [SEARCH DDG] Kanye West recent news
     Hold up a sec
     """
     extractedQuery = ddgsearch.extractQuery(query)
