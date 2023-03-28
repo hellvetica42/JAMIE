@@ -5,7 +5,7 @@ import logging
 class DDGSearch:
     def __init__(self, keyword='[SEARCH]') -> None:
         self.keyword = '[SEARCH DDG]'
-        self.searchRegex = r"^\[SEARCH DDG\](.*)$"
+        self.searchRegex = r"\[SEARCH DDG\](.*)$"
         self.noresultResponse = "There are no results for this query. Try a different [SEARCH DDG] query."
         pass
 
@@ -29,7 +29,7 @@ class DDGSearch:
         return prompt
 
 
-    def execute(self, query, max_results=2):
+    def execute(self, query, max_results=3):
         logging.info(f"Running search query: {query}")
         input("OK?")
         searchResults = ddg(query, max_results=max_results)

@@ -20,7 +20,7 @@ class GPT:
         self.messages.append({'role':'user', 'content':query})
         results = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            temperature=0.2,
+            temperature=0.6,
             messages=self.messages
         )
         resultMsg = results['choices'][0]['message']['content']

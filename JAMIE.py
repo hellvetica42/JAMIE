@@ -17,14 +17,14 @@ class JAMIE:
                 logging.StreamHandler()
             ]
         )
-        self.ecnourageSearch = " To confirm the information necessary to answer this question, search the web using the [SEARCH DDG] keyword or run a command using the [BASH] keyword."
+        self.ecnourageSearch = " If you don't know the answer to this question search the web using the [SEARCH DDG] keyword or run a command using the [BASH] keyword."
 
     def ask(self, question):
         self.gpt.resetHistory()
 
         #logging.info(f"Asking question: {question}")
-        #response = self.gpt.query(question + self.ecnourageSearch)
-        response = self.gpt.query(question)
+        response = self.gpt.query(question + self.ecnourageSearch)
+        #response = self.gpt.query(question)
         #logging.info(f"Got response: {response}")
 
         # Find api keywords and apply
