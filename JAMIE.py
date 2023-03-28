@@ -1,6 +1,9 @@
 import logging
 import sys
 
+import gtts
+from playsound import playsound
+
 from GPT import GPT
 from DDGSearch import DDGSearch
 from BashAPI import BashAPI
@@ -60,4 +63,7 @@ if __name__ == "__main__":
     print(f"USER: {question}")
     response = jamie.ask(question)
     print(f"JAMIE: {response}")
+    tts = gtts.gTTS(response, lang='en')
+    tts.save("jamie.mp3")
+    playsound("jamie.mp3")
     print(f"Usage:", jamie.gpt.usage)

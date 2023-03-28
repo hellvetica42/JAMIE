@@ -36,7 +36,7 @@ class BashAPI:
         elif len(output.stderr.decode()) != 0:
             results = output.stderr.decode()[:self.outputCharLimit]
         else:
-            results = "No output"
+            results = "Command OK"
         prompt = self.constructResponse(results)
         #logging.info(f"Constructed prompt:\n{prompt}")
         return prompt
