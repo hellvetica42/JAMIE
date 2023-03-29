@@ -13,7 +13,7 @@ openai.organization = "org-h2JY1eLn7JLboZJneMfsMGUb"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-class Agent:
+class JAMIE:
     def __init__(self) -> None:
         self.tools = [DDGSearch(), BashAPI()]
         self.tool_map = {t.name:t for t in self.tools}
@@ -102,6 +102,6 @@ class Agent:
 
 if __name__ == "__main__":
     question = sys.argv[1]
-    agent = Agent()
-    result = agent.run(question)
+    jamie = JAMIE()
+    result = jamie.run(question)
     print("JAMIE:", result)
