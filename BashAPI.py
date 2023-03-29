@@ -15,6 +15,7 @@ class BashAPI:
 
 
     def run(self, command):
+        input(f"Running command: {command}  OK?")
         output = subprocess.run(command, capture_output=True, shell=True, executable='/bin/zsh')
         if len(output.stdout.decode()) != 0:
             results = output.stdout.decode()

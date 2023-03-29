@@ -62,7 +62,7 @@ class JAMIE:
 
 
     def extract_action_and_thought(self, text):
-        if FINAL_ANSWER in text and ACTION not in text and '```' not in text:
+        if FINAL_ANSWER in text and ACTION not in text and '```' not in text and "{" not in text and "}" not in text:
             logging.info(text)
             return ("Final Answer", text.split(FINAL_ANSWER)[-1].strip())
 
