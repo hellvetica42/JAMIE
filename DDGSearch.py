@@ -5,17 +5,17 @@ import logging
 class DDGSearch:
     def __init__(self) -> None:
         self.name = "Current search"
-        self.description = "useful for when you need to answer questions about current events or the current state of the world. The input to this should be a single search term."
+        self.description = "useful for when you need to answer questions about current events or the current state of the world. The input to this should be a single search term. You should break up your questions into multiple searches if you need to find more than one bit of information"
         self.noresultResponse = "There are no results for this query. Try a different query."
 
     def constructResponse(self, results):
-        prompt = f"TOOL RESULT\n"
+        prompt = f""
         for i, r in enumerate(results):
             prompt += f"""Title: {r['title']}\nBody: {r['body']}\n"""
         return prompt
 
 
-    def run(self, query, max_results=1):
+    def run(self, query, max_results=3):
         searchResults = ddg(query, max_results=max_results)
         if len(searchResults) == 0:
             return self.noresultResponse
@@ -25,12 +25,4 @@ class DDGSearch:
         return prompt
     
 if __name__ == "__main__":
-    ddgsearch = DDGSearch()
-    query = """Lemme look that shiii up
-    [SEARCH DDG] Kanye West recent news
-    Hold up a sec
-    """
-    extractedQuery = ddgsearch.extractQuery(query)
-    if extractedQuery is not None:
-        response = ddgsearch.performSearch(extractedQuery)
-    print(response)
+    print("NOT IMPLEMENTED")

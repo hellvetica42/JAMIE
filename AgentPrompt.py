@@ -13,7 +13,6 @@ The $JSON_BLOB should only contain a SINGLE action, do NOT return a list of mult
   "action_input": $INPUT
 }}}}
 ```
-Wait for the human to respond with results after using an action. DO NOT go into Observation before receiving a reply from the human. 
 ALWAYS use the following format:
 
 Question: the input question you must answer
@@ -26,4 +25,9 @@ Observation: the result of the action
 ... (this Thought/Action/Observation can repeat N times)
 Thought: I now know the final answer
 Final Answer: the final answer to the original input question"""
-SUFFIX = """Begin! Reminder to always use the exact characters `Final Answer` when responding."""
+SUFFIX = """Begin! Reminder to always use the exact characters `Final Answer` when responding. Current date: {current_date}"""
+
+SCRATCHPAD_PREFIX = """This was your previous work (but I haven't seen any of it! I only see what you return as final answer)\n"""
+FINAL_ANSWER = "Final Answer:"
+THOUGHT = "Thought:"
+ACTION = "Action:"

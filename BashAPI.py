@@ -4,37 +4,22 @@ import logging
 
 class BashAPI:
     def __init__(self, keyword='[BASH]') -> None:
-        self.keyword = keyword
-        self.searchRegex = r"^\[BASH\](.*)$"
+        self.name = "BashCLI"
+        self.description = "useful for then you need to run commands to answer questions about the system you're running on or run calculations. The input to this should be a valid BASH command."
         self.outputCharLimit = 1000
         pass
 
-    def extractQuery(self, query: str):
-        if self.keyword not in query:
-            return None
-
-        match = re.search(self.searchRegex, query, re.MULTILINE)
-        if match:
-            result = match.group(1).strip()
-            return result
-        else:
-            print("Error matching regex in query\n", query)
-
-        return None
 
     def constructResponse(self, results):
-        prompt = f"[RESULTS]\n{results}"
-        return prompt
+        return results[:self.outputCharLimit] 
 
 
-    def execute(self, command):
-        logging.info(f"Running bash command: {command}")
-        input("OK?")
+    def run(self, command):
         output = subprocess.run(command, capture_output=True, shell=True, executable='/bin/zsh')
         if len(output.stdout.decode()) != 0:
-            results = output.stdout.decode()[:self.outputCharLimit]
+            results = output.stdout.decode()
         elif len(output.stderr.decode()) != 0:
-            results = output.stderr.decode()[:self.outputCharLimit]
+            results = output.stderr.decode()
         else:
             results = "No output"
         prompt = self.constructResponse(results)
@@ -42,12 +27,4 @@ class BashAPI:
         return prompt
     
 if __name__ == "__main__":
-    bashapi = BashAPI()
-    query = """Lemme look that shiii up
-    [BASH] date
-    Hold up a sec
-    """
-    extractedQuery = bashapi.extractQuery(query)
-    if extractedQuery is not None:
-        response = bashapi.execute(extractedQuery)
-    print(response)
+    print("NOT IMPLEMENTED")
